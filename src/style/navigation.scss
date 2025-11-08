@@ -1,0 +1,30 @@
+@use "global" as *;
+@use "mixins" as *;
+
+.nav {
+	background-color: $background;
+	box-shadow: 0 10px 10px -5px $text;
+	&__logo-img {
+		width: 35px;
+		height: 35px;
+	}
+	@include max-width(768px) {
+		&__menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			width: 100%;
+			order: 3;
+			background-color: $background;
+			border-bottom: 1px solid $text;
+			box-shadow: 0 10px 10px -5px $text;
+		}
+	}
+	&__menu-item {
+		list-style: none;
+		a {
+			color: $text;
+			text-decoration: none;
+		}
+	}
+}

@@ -1,0 +1,27 @@
+@use "global" as *;
+@use "mixins" as *;
+
+.hero {
+	&__offer-btn {
+		text-decoration: none;
+	}
+	&__main-container {
+		margin: auto;
+		width: 100%;
+	}
+	&__coffee-cup-img {
+		width: 100%;
+		max-width: 350px;
+		object-fit: cover;
+	}
+	@include min-width(768px) {
+		&__coffee-cup-img {
+			max-width: 450px;
+		}
+	}
+	@include min-width(1200px) {
+		&__coffee-cup-img {
+			max-width: 550px;
+		}
+	}
+}

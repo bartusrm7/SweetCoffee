@@ -1,0 +1,44 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+$background: #e6ccb2;
+$text: #432818;
+$secondary: #e7bc91;
+
+html {
+	scroll-padding-top: 70px;
+}
+body {
+	background-color: $background;
+	color: $text;
+	font-family: "Playwrite DE Grund", cursive;
+	font-optical-sizing: auto;
+}
+.custom-btn {
+	background-color: $text;
+	color: $background;
+	border: 2px solid $text;
+	transition: 0.3s;
+}
+.custom-btn:hover {
+	background-color: $secondary;
+	color: $text;
+	border: 2px solid $text;
+}
+.custom-btn:active {
+	background-color: $secondary !important;
+	color: $text !important;
+	border: 2px solid $text !important;
+}
+.label-section {
+	position: absolute;
+	top: 0;
+	right: 50%;
+	margin: auto;
+	transform: translateX(50%);
+}

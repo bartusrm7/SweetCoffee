@@ -1,0 +1,173 @@
+@use "global" as *;
+@use "mixins" as *;
+
+.coffee-process {
+	position: relative;
+	&__main-container {
+		@include min-width(568px) {
+			margin-bottom: 7rem;
+		}
+		@include max-width(992px) {
+			margin-bottom: 10rem;
+		}
+		@include min-width(992px) {
+			margin-bottom: 0;
+		}
+	}
+	&__process-container {
+		margin-top: 10rem;
+		justify-content: center;
+		gap: 0.25rem;
+		@include min-width(568px) {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
+		}
+		@include min-width(1200px) {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1.5rem;
+		}
+	}
+	&__process-item {
+		position: relative;
+		width: 230px;
+		height: 230px;
+		&:nth-child(odd) {
+			background-color: $secondary;
+		}
+		&:nth-child(even) {
+			background-color: $text;
+			color: $background;
+			@include min-width(568px) {
+				transform: translateY(50%);
+			}
+			@include min-width(1200px) {
+				transform: translateY(0);
+			}
+		}
+		@include max-width(568px) {
+			&:nth-child(1)::after,
+			&:nth-child(2)::after,
+			&:nth-child(3)::after,
+			&:nth-child(4)::after,
+			&:nth-child(5)::after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				right: 50%;
+				width: 8px;
+				height: 100%;
+				background-color: $text;
+				z-index: -1;
+			}
+			&:nth-child(1)::after {
+				width: 8px;
+				height: 100%;
+			}
+			&:nth-child(2)::after {
+				width: 8px;
+				height: 100%;
+			}
+			&:nth-child(3)::after {
+				width: 8px;
+				height: 100%;
+			}
+			&:nth-child(4)::after {
+				width: 8px;
+				height: 100%;
+			}
+			&:nth-child(5)::after {
+				width: 8px;
+				height: 100%;
+			}
+		}
+		@media (min-width: 568px) and (max-width: 1200px) {
+			&:nth-child(odd)::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: 8px;
+				height: 100%;
+				background-color: $text;
+				transform: rotate(-45deg);
+				z-index: -1;
+			}
+			&:nth-child(even)::after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 8px;
+				height: 100%;
+				background-color: $text;
+				transform: rotate(45deg);
+				z-index: -1;
+			}
+			&:last-child::after {
+				height: 0;
+			}
+		}
+		@include min-width(568px) {
+			width: 250px;
+			height: 250px;
+		}
+		@include min-width(992px) {
+			width: 280px;
+			height: 280px;
+		}
+		@include min-width(1200px) {
+			width: 260px;
+			height: 260px;
+			&:nth-child(4) {
+				order: 6;
+			}
+			&:nth-child(5) {
+				order: 5;
+				z-index: 1;
+			}
+			&:nth-child(6) {
+				order: 4;
+				z-index: 2;
+			}
+			&:nth-child(1)::after,
+			&:nth-child(2)::after,
+			&:nth-child(3)::after,
+			&:nth-child(4)::after,
+			&:nth-child(5)::after {
+				content: "";
+				position: absolute;
+				top: 50%;
+				width: 100%;
+				height: 8px;
+				background-color: $text;
+				z-index: -1;
+			}
+			&:nth-child(1)::after {
+				left: 100%;
+				width: 100%;
+				height: 8px;
+			}
+			&:nth-child(2)::after {
+				left: 100%;
+				width: 100%;
+				height: 8px;
+			}
+			&:nth-child(3)::after {
+				left: 50%;
+				width: 8px;
+				height: 100%;
+			}
+			&:nth-child(4)::after {
+				right: 100%;
+				width: 100%;
+				height: 8px;
+			}
+			&:nth-child(5)::after {
+				right: 100%;
+				width: 100%;
+				height: 8px;
+			}
+		}
+	}
+}
