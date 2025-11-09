@@ -5,10 +5,14 @@ import { useState, useEffect } from "react";
 import { Button, Container } from "react-bootstrap";
 import coffeeLogo from "../assets/coffee-cup-logo.svg";
 import Cart from "./Cart";
+import { useCartContext } from "./CartContext";
 
 export default function Navigation() {
 	const [isMenuOpened, setIsMenuOpened] = useState(false);
 	const [isOpenedCart, setIsOpenedCart] = useState(false);
+	const { cartArrayData } = useCartContext();
+
+	const allAmounts = cartArrayData.reduce((sum, item) => sum + item.amount, 0);
 
 	const handleMenuOpen = () => {
 		setIsMenuOpened(!isMenuOpened);
@@ -31,7 +35,7 @@ export default function Navigation() {
 	}, [isOpenedCart]);
 
 	return (
-		<nav className='nav fixed-top pt-2 pb-3'>
+		<nav className='nav fixed-top pt-2 pb-2'>
 			<Container>
 				<div className='d-flex justify-content-between align-items-center'>
 					<div className='nav__logo-container d-flex align-items-center'>
@@ -39,39 +43,44 @@ export default function Navigation() {
 						<img className='nav__logo-img ms-1 fs-2' src={coffeeLogo} alt='Coffee Logo' title='Coffee Logo' />
 					</div>
 
-					<ul className='nav__menu d-md-flex flex-column flex-md-row justify-content-between align-items-center gap-4 py-2 p-0 p-md-0 m-0' style={{ display: isMenuOpened ? "flex" : "none" }}>
+					<ul className='nav__menu d-lg-flex flex-column flex-lg-row justify-content-between align-items-center p-0 m-0' style={{ display: isMenuOpened ? "flex" : "none" }}>
 						<li className='nav__menu-item'>
-							<a href='#strona-główna'>Strona główna</a>
+							<a className='p-3' onClick={() => setIsMenuOpened(false)} href='#strona-główna'>
+								Strona główna
+							</a>
 						</li>
 						<li className='nav__menu-item'>
-							<a onClick={() => setIsMenuOpened(false)} href='#o-nas'>
+							<a className='p-3' onClick={() => setIsMenuOpened(false)} href='#o-nas'>
 								O nas
 							</a>
 						</li>
 						<li className='nav__menu-item'>
-							<a onClick={() => setIsMenuOpened(false)} href='#proces-kawy'>
+							<a className='p-3' onClick={() => setIsMenuOpened(false)} href='#proces-kawy'>
 								Proces kawy
 							</a>
 						</li>
 						<li className='nav__menu-item'>
-							<a onClick={() => setIsMenuOpened(false)} href='#menu'>
+							<a className='p-3' onClick={() => setIsMenuOpened(false)} href='#menu'>
 								Menu
 							</a>
 						</li>
 						<li className='nav__menu-item'>
-							<a onClick={() => setIsMenuOpened(false)} href='#kontakt'>
+							<a className='p-3' onClick={() => setIsMenuOpened(false)} href='#kontakt'>
 								Kontakt
 							</a>
 						</li>
 					</ul>
 
 					<div className='d-flex align-items-center'>
-						<Button className='nav__hamburger custom-btn d-md-none me-2' onClick={handleMenuOpen}>
+						<Button className='nav__hamburger custom-btn d-lg-none me-2' onClick={handleMenuOpen}>
 							{isMenuOpened ? <MenuOpenIcon /> : <MenuIcon />}
 						</Button>
-						<Button className='nav__shoping-cart custom-btn' onClick={handleOpenCart}>
-							<ShoppingCartIcon />
-						</Button>
+						<div className='d-flex align-items-center'>
+							<Button className='nav__shoping-cart custom-btn' onClick={handleOpenCart}>
+								<ShoppingCartIcon />
+							</Button>
+							<span className='ms-1'>({allAmounts})</span>
+						</div>
 					</div>
 				</div>
 				{isOpenedCart && <Cart displayCart={isOpenedCart} />}

@@ -8,7 +8,7 @@
 		width: 35px;
 		height: 35px;
 	}
-	@include max-width(768px) {
+	@include max-width(992px) {
 		&__menu {
 			position: absolute;
 			top: 100%;
@@ -19,12 +19,32 @@
 			border-bottom: 1px solid $text;
 			box-shadow: 0 10px 10px -5px $text;
 		}
+		&__menu-item {
+			width: 100%;
+			text-align: center;
+			a {
+				width: 100%;
+				height: 100%;
+			}
+			&:hover {
+				width: 100%;
+				cursor: pointer;
+			}
+		}
 	}
 	&__menu-item {
 		list-style: none;
+		transition: 0.3s;
 		a {
+			display: block;
 			color: $text;
 			text-decoration: none;
+		}
+		&:hover {
+			background-color: $text;
+			a {
+				color: $background;
+			}
 		}
 	}
 }

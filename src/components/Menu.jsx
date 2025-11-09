@@ -1,22 +1,31 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useCartContext } from "./CartContext";
 
 export default function Menu() {
 	const [amountOfCoffeeState, setAmountOfCoffeeState] = useState([
-		{ coffee: "Americano", amount: 0 },
-		{ coffee: "Flat White", amount: 0 },
-		{ coffee: "Espresso", amount: 0 },
-		{ coffee: "Cappuccino", amount: 0 },
-		{ coffee: "Latte", amount: 0 },
-		{ coffee: "Cold Brew", amount: 0 },
+		{ coffee: "Americano", amount: 0, price: 11 },
+		{ coffee: "Flat White", amount: 0, price: 12 },
+		{ coffee: "Espresso", amount: 0, price: 9 },
+		{ coffee: "Cappuccino", amount: 0, price: 13 },
+		{ coffee: "Latte", amount: 0, price: 14 },
+		{ coffee: "Cold Brew", amount: 0, price: 15 },
 	]);
-	const [newProduct, setNewProduct] = useState([{ productName: "", productPrice: 0, productAmount: 0 }]);
+	const { cartArrayData, setCartArrayData } = useCartContext();
 
 	const handleAddNewProductToCart = coffeeName => {
-		setNewProduct(amountOfCoffeeState);
-
+		const selectedCoffee = amountOfCoffeeState.find(item => item.coffee === coffeeName);
+		if (!selectedCoffee || selectedCoffee.amount === 0 || selectedCoffee.price === 0) return;
+		setCartArrayData(prevState => {
+			const exist = prevState.find(item => item.coffee === coffeeName);
+			if (exist) {
+				return prevState.map(item => (item.coffee === coffeeName ? { ...item, amount: item.amount + selectedCoffee.amount, price: item.price + selectedCoffee.price * selectedCoffee.amount } : item));
+			} else {
+				return [...prevState, { coffee: selectedCoffee.coffee, amount: selectedCoffee.amount, price: selectedCoffee.price * selectedCoffee.amount }];
+			}
+		});
 		setAmountOfCoffeeState(prevState => prevState.map(item => (item.coffee === coffeeName ? { ...item, amount: 0 } : item)));
 	};
 
@@ -28,7 +37,7 @@ export default function Menu() {
 	};
 
 	return (
-		<div className='menu' id="menu">
+		<div className='menu' id='menu'>
 			<Container>
 				<Row>
 					<Col lg={10} className='mx-auto d-flex justify-content-center align-items-center min-vh-100'>
@@ -37,10 +46,10 @@ export default function Menu() {
 							<div className='menu__menu-items-container flex-column flex-wrap flex-xl-row justify-content-center align-items-center'>
 								<div className='menu__item rounded-4 d-flex flex-column justify-content-center align-items-center'>
 									<div className='menu__img-item mb-2'>
-										<span className='menu__coffee-name py-2 px-3 rounded-5'>Americano</span>
+										<span className='menu__coffee-name p-2 rounded-5'>Americano</span>
 									</div>
 									<div className='menu__item-price-name fw-bold'>
-										<span>11zł</span>
+										<span>{amountOfCoffeeState.find(item => item.coffee === "Americano")?.price}zł</span>
 									</div>
 									<div className='d-flex justify-content-center align-items-center'>
 										<Button className='cart-btn text-bg-light rounded-5 mx-1 px-3' onClick={() => handleAddProduct("Americano")}>
@@ -57,10 +66,10 @@ export default function Menu() {
 								</div>
 								<div className='menu__item rounded-4 d-flex flex-column justify-content-center align-items-center'>
 									<div className='menu__img-item mb-2'>
-										<span className='menu__coffee-name py-2 px-3 rounded-5'>Flat White</span>
+										<span className='menu__coffee-name p-2 rounded-5'>Flat White</span>
 									</div>
 									<div className='menu__item-price-name fw-bold'>
-										<span>12zł</span>
+										<span>{amountOfCoffeeState.find(item => item.coffee === "Flat White")?.price}zł</span>
 									</div>
 									<div className='d-flex justify-content-center align-items-center'>
 										<Button className='cart-btn text-bg-light rounded-5 mx-1 px-3' onClick={() => handleAddProduct("Flat White")}>
@@ -80,7 +89,7 @@ export default function Menu() {
 										<span className='menu__coffee-name py-2 px-3 rounded-5'>Espresso</span>
 									</div>
 									<div className='menu__item-price-name fw-bold'>
-										<span>9zł</span>
+										<span>{amountOfCoffeeState.find(item => item.coffee === "Espresso")?.price}zł</span>
 									</div>
 									<div className='d-flex justify-content-center align-items-center'>
 										<Button className='cart-btn text-bg-light rounded-5 mx-1 px-3' onClick={() => handleAddProduct("Espresso")}>
@@ -97,10 +106,10 @@ export default function Menu() {
 								</div>
 								<div className='menu__item rounded-4 d-flex flex-column justify-content-center align-items-center'>
 									<div className='menu__img-item mb-2'>
-										<span className='menu__coffee-name py-2 px-3 rounded-5'>Cappuccino</span>
+										<span className='menu__coffee-name p-2 rounded-5'>Cappuccino</span>
 									</div>
 									<div className='menu__item-price-name fw-bold'>
-										<span>13zł</span>
+										<span>{amountOfCoffeeState.find(item => item.coffee === "Cappuccino")?.price}zł</span>
 									</div>
 									<div className='d-flex justify-content-center align-items-center'>
 										<Button className='cart-btn text-bg-light rounded-5 mx-1 px-3' onClick={() => handleAddProduct("Cappuccino")}>
@@ -120,7 +129,7 @@ export default function Menu() {
 										<span className='menu__coffee-name py-2 px-3 rounded-5'>Latte</span>
 									</div>
 									<div className='menu__item-price-name fw-bold'>
-										<span>14zł</span>
+										<span>{amountOfCoffeeState.find(item => item.coffee === "Latte")?.price}zł</span>
 									</div>
 									<div className='d-flex justify-content-center align-items-center'>
 										<Button className='cart-btn text-bg-light rounded-5 mx-1 px-3' onClick={() => handleAddProduct("Latte")}>
@@ -137,10 +146,10 @@ export default function Menu() {
 								</div>
 								<div className='menu__item rounded-4 d-flex flex-column justify-content-center align-items-center'>
 									<div className='menu__img-item mb-2'>
-										<span className='menu__coffee-name py-2 px-3 rounded-5'>Cold Brew</span>
+										<span className='menu__coffee-name p-2 rounded-5'>Cold Brew</span>
 									</div>
 									<div className='menu__item-price-name fw-bold'>
-										<span>15zł</span>
+										<span>{amountOfCoffeeState.find(item => item.coffee === "Cold Brew")?.price}zł</span>
 									</div>
 									<div className='d-flex justify-content-center align-items-center'>
 										<Button className='cart-btn text-bg-light rounded-5 mx-1 px-3' onClick={() => handleAddProduct("Cold Brew")}>
