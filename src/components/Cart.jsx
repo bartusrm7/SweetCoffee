@@ -23,8 +23,8 @@ export default function Cart({ displayCart }) {
 								<span>
 									{item.coffee} x{item.amount}
 								</span>
-								<Button className='cart__remove-btn p-0 px-2' onClick={() => handleRemoveProductFromCart(item.coffee)}>
-									-
+								<Button className='cart__remove-btn p-0 px-2 fw-bold' onClick={() => handleRemoveProductFromCart(item.coffee)}>
+									<i class='bi bi-trash-fill'></i>
 								</Button>
 							</div>
 						))}
